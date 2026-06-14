@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // ✅ ACTIVAR EXCLUIR FINES DE SEMANA POR DEFECTO
     excluirFindes.checked = true;
     
+    // ✅ DEJAR FECHAS VACÍAS
+    fechaInicio.value = "";
+    fechaFin.value = "";
+    
     let graficoInstance = null;
     let ultimoResultado = null;
     let mapaFestivosGlobal = new Map();
@@ -21,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let rangoFin = null;
     let todosFestivosGlobal = [];
     
-    // CREAR TOOLTIP PERSONALIZADO
+    // Tooltip personalizado
     let tooltip = document.createElement('div');
     tooltip.id = 'customTooltip';
     document.body.appendChild(tooltip);
@@ -39,15 +43,10 @@ document.addEventListener('DOMContentLoaded', function() {
         tooltip.classList.remove('visible');
     }
     
-    // Establecer fecha actual por defecto
-    const hoy = new Date();
-    const hoyStr = hoy.toISOString().split('T')[0];
-    const dentroUnMes = new Date(hoy);
-    dentroUnMes.setMonth(dentroUnMes.getMonth() + 1);
-    fechaInicio.value = hoyStr;
-    fechaFin.value = dentroUnMes.toISOString().split('T')[0];
-    
-    paisSelect.addEventListener('change', function() { cargarRegiones(this.value); resultadosPanel.classList.add('hidden'); });
+    paisSelect.addEventListener('change', function() { 
+        cargarRegiones(this.value); 
+        resultadosPanel.classList.add('hidden');
+    });
     
     async function calcular() {
         const pais = paisSelect.value;
@@ -59,8 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
         rangoInicio = inicio;
         rangoFin = fin;
         
-        if (!inicio || !fin) { alert("Selecciona ambas fechas"); return; }
-        if (new Date(inicio) > new Date(fin)) { alert("La fecha inicial no puede ser posterior"); return; }
+        if (!inicio || !fin) { 
+            alert("Por favor, selecciona ambas fechas"); 
+            return; 
+        }
+        if (new Date(inicio) > new Date(fin)) { 
+            alert("La fecha inicial no puede ser posterior a la final"); 
+            return; 
+        }
         
         calcularBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Calculando...';
         calcularBtn.disabled = true;
@@ -90,22 +95,31 @@ document.addEventListener('DOMContentLoaded', function() {
             actualizarVistaPrevia();
             mostrarListaFestivos(festivosEnRango);
             
-            // ✅ ACTUALIZAR CALENDARIO CON EL MES DE INICIO
             const fechaInicioObj = new Date(inicio);
             calendarioActual = new Date(fechaInicioObj.getFullYear(), fechaInicioObj.getMonth(), 1);
             actualizarCalendario(mapaFestivosGlobal, pais, inicio, fin);
             
             resultadosPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } catch (error) { console.error(error); alert("Error al obtener datos."); }
-        finally { calcularBtn.innerHTML = '<i class="fas fa-chart-line"></i> Calcular periodo'; calcularBtn.disabled = false; }
+        } catch (error) { 
+            console.error(error); 
+            alert("Error al obtener datos."); 
+        }
+        finally { 
+            calcularBtn.innerHTML = '<i class="fas fa-chart-line"></i> Calcular periodo'; 
+            calcularBtn.disabled = false; 
+        }
     }
     
     function mostrarListaFestivos(festivos) {
         const container = document.getElementById('listaFestivos');
-        if (!festivos.length) { container.innerHTML = '<p class="cargando"><i class="fas fa-calendar-times"></i> No hay festivos en este rango</p>'; return; }
+        if (!festivos.length) { 
+            container.innerHTML = '<p class="cargando"><i class="fas fa-calendar-times"></i> No hay festivos en este rango</p>'; 
+            return; 
+        }
         container.innerHTML = '';
         festivos.forEach(f => {
-            const item = document.createElement('div'); item.className = 'festivo-item';
+            const item = document.createElement('div'); 
+            item.className = 'festivo-item';
             item.innerHTML = `<div class="festivo-fecha"><i class="fas fa-calendar-day"></i> ${f.date}</div><div class="festivo-nombre"><i class="fas fa-gift"></i> ${f.name}</div><div class="festivo-tipo"><i class="fas fa-tag"></i> ${f.type}</div>`;
             container.appendChild(item);
         });
@@ -116,24 +130,54 @@ document.addEventListener('DOMContentLoaded', function() {
         if (graficoInstance) graficoInstance.destroy();
         graficoInstance = new Chart(ctx, {
             type: 'doughnut',
-            data: { labels: ['Días hábiles', 'Festivos', 'Fines de semana'], datasets: [{ data: [habiles, festivos, total - habiles - festivos], backgroundColor: ['#4caf50', '#f72585', '#6c757d'], borderWidth: 0 }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+            data: { 
+                labels: ['Días hábiles', 'Festivos', 'Fines de semana'], 
+                datasets: [{ 
+                    data: [habiles, festivos, total - habiles - festivos], 
+                    backgroundColor: ['#4caf50', '#f72585', '#6c757d'], 
+                    borderWidth: 0 
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true, 
+                plugins: { legend: { position: 'bottom' } } 
+            }
         });
     }
     
     function actualizarVistaPrevia() {
         if (!ultimoResultado) return;
-        const previewDiv = document.getElementById('vistaPrevia'); const mensajeSpan = document.getElementById('mensajeResumen');
+        const previewDiv = document.getElementById('vistaPrevia'); 
+        const mensajeSpan = document.getElementById('mensajeResumen');
         const regionTexto = ultimoResultado.region ? ` en ${regionSelect.options[regionSelect.selectedIndex]?.text}` : '';
         mensajeSpan.innerHTML = `<i class="fas fa-chart-line"></i> <strong>Del ${ultimoResultado.inicio} al ${ultimoResultado.fin}</strong>: ${ultimoResultado.totalDias} días totales, <strong>${ultimoResultado.festivos} festivos${regionTexto}</strong> y <strong>${ultimoResultado.findes} fines de semana</strong>.`;
         previewDiv.classList.remove('hidden');
     }
     
-    function obtenerUrlCompartir() { if (!ultimoResultado) return window.location.href; return `${window.location.origin}${window.location.pathname}?pais=${ultimoResultado.pais}&region=${ultimoResultado.region||''}&inicio=${ultimoResultado.inicio}&fin=${ultimoResultado.fin}&excluir=${ultimoResultado.excluir}`; }
+    function obtenerUrlCompartir() { 
+        if (!ultimoResultado) return window.location.href; 
+        return `${window.location.origin}${window.location.pathname}?pais=${ultimoResultado.pais}&region=${ultimoResultado.region||''}&inicio=${ultimoResultado.inicio}&fin=${ultimoResultado.fin}&excluir=${ultimoResultado.excluir}`; 
+    }
     
-    document.getElementById('compartirWA')?.addEventListener('click', () => { if(ultimoResultado){ const texto = `📅 Del ${ultimoResultado.inicio} al ${ultimoResultado.fin}: ${ultimoResultado.totalDias} días, ${ultimoResultado.festivos} festivos`; window.open(`https://wa.me/?text=${encodeURIComponent(texto+" "+obtenerUrlCompartir())}`, '_blank'); } });
-    document.getElementById('compartirTW')?.addEventListener('click', () => { if(ultimoResultado){ const texto = `📊 Del ${ultimoResultado.inicio} al ${ultimoResultado.fin}: ${ultimoResultado.totalDias} días, ${ultimoResultado.festivos} festivos`; window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}&url=${encodeURIComponent(obtenerUrlCompartir())}`, '_blank'); } });
-    document.getElementById('copiarLink')?.addEventListener('click', async () => { await navigator.clipboard.writeText(obtenerUrlCompartir()); alert("✅ Enlace copiado"); });
+    document.getElementById('compartirWA')?.addEventListener('click', () => { 
+        if(ultimoResultado){ 
+            const texto = `📅 Del ${ultimoResultado.inicio} al ${ultimoResultado.fin}: ${ultimoResultado.totalDias} días, ${ultimoResultado.festivos} festivos`; 
+            window.open(`https://wa.me/?text=${encodeURIComponent(texto+" "+obtenerUrlCompartir())}`, '_blank'); 
+        } 
+    });
+    
+    document.getElementById('compartirTW')?.addEventListener('click', () => { 
+        if(ultimoResultado){ 
+            const texto = `📊 Del ${ultimoResultado.inicio} al ${ultimoResultado.fin}: ${ultimoResultado.totalDias} días, ${ultimoResultado.festivos} festivos`; 
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}&url=${encodeURIComponent(obtenerUrlCompartir())}`, '_blank'); 
+        } 
+    });
+    
+    document.getElementById('copiarLink')?.addEventListener('click', async () => { 
+        await navigator.clipboard.writeText(obtenerUrlCompartir()); 
+        alert("✅ Enlace copiado"); 
+    });
     
     const verFestivosBtn = document.getElementById('verFestivosLink');
     if (verFestivosBtn) {
@@ -158,7 +202,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // CALENDARIO CON TOOLTIP FLOTANTE
     let calendarioActual = new Date(); 
     let paisActual = 'ES';
     
@@ -207,7 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
         punto.className = esFestivo ? 'punto punto-festivo' : (esFinde ? 'punto punto-finde' : 'punto punto-normal'); 
         div.appendChild(punto);
         
-        // TOOLTIP FLOTANTE
         div.addEventListener('mouseenter', (e) => {
             let texto = '';
             let tipo = '';
@@ -230,10 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showTooltip(texto, tipo, e.clientX, e.clientY);
         });
         
-        div.addEventListener('mouseleave', () => {
-            hideTooltip();
-        });
-        
+        div.addEventListener('mouseleave', () => { hideTooltip(); });
         div.addEventListener('mousemove', (e) => {
             if (tooltip.classList.contains('visible')) {
                 tooltip.style.left = (e.clientX + 15) + 'px';
@@ -264,7 +303,6 @@ document.addEventListener('DOMContentLoaded', function() {
         actualizarCalendario(mapaFestivosGlobal, paisActual, rangoInicio, rangoFin); 
     });
     
-    // TABS
     document.querySelectorAll('.tab-boton').forEach(btn => { 
         btn.addEventListener('click', () => { 
             const tabId = btn.dataset.tab; 
@@ -275,23 +313,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }); 
     });
     
-    // FAQ ACORDEÓN
     document.querySelectorAll('.faq-pregunta').forEach(p => p.addEventListener('click', function() { this.parentElement.classList.toggle('activo'); }));
-    
-    // HAMBURGUESA
     document.querySelector('.hamburger')?.addEventListener('click', () => document.querySelector('.nav-menu')?.classList.toggle('activo'));
     
-    // INICIALIZACIÓN
     calcularBtn.addEventListener('click', calcular);
     cargarRegiones('ES');
-    actualizarCalendario(new Map(), 'ES', fechaInicio.value, fechaFin.value);
+    actualizarCalendario(new Map(), 'ES', null, null);
     
-    // Cargar parámetros de URL
     const params = new URLSearchParams(window.location.search);
     if (params.has('pais')) paisSelect.value = params.get('pais');
     if (params.has('region') && params.get('region')) setTimeout(() => regionSelect.value = params.get('region'), 100);
     if (params.has('inicio')) fechaInicio.value = params.get('inicio');
     if (params.has('fin')) fechaFin.value = params.get('fin');
     if (params.has('excluir')) excluirFindes.checked = params.get('excluir') === 'true';
-    if (params.has('inicio') && params.has('fin')) calcular(); else calcular();
+    
+    // ✅ Solo calcular si hay fechas en la URL (cuando se comparte)
+    if (params.has('inicio') && params.has('fin') && fechaInicio.value && fechaFin.value) {
+        calcular();
+    }
 });
