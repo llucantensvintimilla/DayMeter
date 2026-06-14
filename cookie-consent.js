@@ -53,7 +53,9 @@
         // Google Analytics 4 (GA4)
         const script1 = document.createElement('script');
         script1.async = true;
-        script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-TU_ID_ANALYTICS';
+        const script1 = document.createElement('script');
+        script1.async = true;
+        script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-RDL1LK83BR';
         document.head.appendChild(script1);
         
         const script2 = document.createElement('script');
@@ -61,7 +63,7 @@
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-TU_ID_ANALYTICS');
+            gtag('config', 'G-RDL1LK83BR');
         `;
         document.head.appendChild(script2);
         
