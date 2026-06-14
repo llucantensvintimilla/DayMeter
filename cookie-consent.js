@@ -1,17 +1,6 @@
-// Cookie Consent Manager
 (function() {
-    // Configuración
     const CONSENT_KEY = 'daymeter_cookie_consent';
-    const CONSENT_EXPIRY = 365; // días
     
-    // Tipos de cookies
-    const COOKIE_TYPES = {
-        NECESSARY: 'necessary',    // Siempre activas
-        ANALYTICS: 'analytics',    // Google Analytics
-        MARKETING: 'marketing'     // AdSense
-    };
-    
-    // Verificar si ya hay consentimiento
     function getConsent() {
         const consent = localStorage.getItem(CONSENT_KEY);
         if (consent) {
@@ -24,7 +13,6 @@
         return null;
     }
     
-    // Guardar consentimiento
     function saveConsent(analytics, marketing) {
         const consent = {
             analytics: analytics,
@@ -35,22 +23,17 @@
         return consent;
     }
     
-    // Cargar scripts según consentimiento
     function loadScriptsBasedOnConsent() {
         const consent = getConsent();
-        
         if (consent && consent.analytics === true) {
             loadGoogleAnalytics();
         }
-        
         if (consent && consent.marketing === true) {
             loadAdSense();
         }
     }
     
-    // Cargar Google Analytics
     function loadGoogleAnalytics() {
-        // Google Analytics 4 (GA4)
         const script1 = document.createElement('script');
         script1.async = true;
         script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-RDL1LK83BR';
@@ -64,27 +47,21 @@
             gtag('config', 'G-RDL1LK83BR');
         `;
         document.head.appendChild(script2);
-        
         console.log('Google Analytics cargado con consentimiento');
     }
     
-    // Cargar Google AdSense
     function loadAdSense() {
         const script = document.createElement('script');
         script.async = true;
         script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID_ADSENSE';
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
-        
         console.log('Google AdSense cargado con consentimiento');
     }
     
-    // Mostrar banner de cookies
     function showCookieBanner() {
-        // Si ya hay consentimiento, no mostrar
         if (getConsent() !== null) return;
         
-        // Crear el banner
         const banner = document.createElement('div');
         banner.id = 'cookieConsentBanner';
         banner.innerHTML = `
@@ -124,7 +101,6 @@
         `;
         document.body.appendChild(banner);
         
-        // Estilos del banner
         const style = document.createElement('style');
         style.textContent = `
             #cookieConsentBanner {
@@ -258,7 +234,6 @@
         `;
         document.head.appendChild(style);
         
-        // Eventos del banner
         document.getElementById('cookieAcceptAll')?.addEventListener('click', () => {
             saveConsent(true, true);
             loadGoogleAnalytics();
@@ -290,13 +265,11 @@
         });
     }
     
-    // Inicializar
     function init() {
         loadScriptsBasedOnConsent();
         showCookieBanner();
     }
     
-    // Ejecutar al cargar la página
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
