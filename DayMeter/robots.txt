@@ -1,0 +1,14 @@
+# Robots.txt para DayMeter
+# Permite a todos los bots rastrear todo el sitio
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://llucantensvintimilla.github.io/DayMeter/sitemap.xml
+
+# Reglas específicas (opcional)
+Disallow: /404.html
+
+# Tiempo de rastreo (sugerencia para Google)
+Crawl-delay: 1
