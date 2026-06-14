@@ -53,8 +53,6 @@
         // Google Analytics 4 (GA4)
         const script1 = document.createElement('script');
         script1.async = true;
-        const script1 = document.createElement('script');
-        script1.async = true;
         script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-RDL1LK83BR';
         document.head.appendChild(script1);
         
@@ -139,7 +137,7 @@
                 z-index: 10000;
                 padding: 1rem;
                 box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-                border-top: 3px solid var(--secundario, #f72585);
+                border-top: 3px solid #f72585;
                 font-family: 'Segoe UI', sans-serif;
             }
             .cookie-banner-content {
@@ -160,7 +158,7 @@
             }
             .cookie-banner-text i {
                 font-size: 2rem;
-                color: var(--secundario, #f72585);
+                color: #f72585;
             }
             .cookie-banner-text p {
                 margin: 0;
@@ -181,17 +179,17 @@
                 transition: all 0.2s;
             }
             .cookie-btn.accept-all {
-                background: linear-gradient(135deg, var(--secundario, #f72585), #e53888);
+                background: linear-gradient(135deg, #f72585, #e53888);
                 color: white;
             }
             .cookie-btn.necessary {
                 background: transparent;
-                border: 2px solid var(--gris, #6c757d);
+                border: 2px solid #6c757d;
                 color: white;
             }
             .cookie-btn.settings {
                 background: transparent;
-                border: 2px solid var(--primario, #4361ee);
+                border: 2px solid #4361ee;
                 color: white;
             }
             .cookie-btn:hover {
@@ -241,11 +239,11 @@
                 margin-top: 1rem;
             }
             .cookie-btn.save {
-                background: var(--primario, #4361ee);
+                background: #4361ee;
                 color: white;
             }
             .cookie-btn.close {
-                background: var(--gris, #6c757d);
+                background: #6c757d;
                 color: white;
             }
             @media (max-width: 768px) {
