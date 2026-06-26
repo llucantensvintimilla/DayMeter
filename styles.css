@@ -400,8 +400,8 @@ body {
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    /* Solo propiedades compositor-friendly para evitar non-composited animations */
-    transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+    /* Solo opacity y background-color (compositor-friendly) */
+    transition: background-color 0.3s, opacity 0.3s;
     /* Reserva el espacio del border-bottom activo para evitar layout shift */
     border-bottom: 2px solid transparent;
 }
