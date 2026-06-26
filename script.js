@@ -125,25 +125,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    function actualizarGrafico(total, festivos, findes, habiles) {
+    function crearGrafico(total, festivos, findes, habiles) {
         const ctx = document.getElementById('graficoDias').getContext('2d');
         if (graficoInstance) graficoInstance.destroy();
         graficoInstance = new Chart(ctx, {
             type: 'doughnut',
-            data: { 
-                labels: ['Días hábiles', 'Festivos', 'Fines de semana'], 
-                datasets: [{ 
-                    data: [habiles, festivos, total - habiles - festivos], 
-                    backgroundColor: ['#4caf50', '#f72585', '#6c757d'], 
-                    borderWidth: 0 
-                }] 
+            data: {
+                labels: ['Días hábiles', 'Festivos', 'Fines de semana'],
+                datasets: [{
+                    data: [habiles, festivos, total - habiles - festivos],
+                    backgroundColor: ['#4caf50', '#f72585', '#6c757d'],
+                    borderWidth: 0
+                }]
             },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { legend: { position: 'bottom' } } 
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { position: 'bottom' } }
             }
         });
+    }
+
+    function actualizarGrafico(total, festivos, findes, habiles) {
+        if (typeof Chart !== 'undefined') {
+            crearGrafico(total, festivos, findes, habiles);
+            return;
+        }
+        // Carga dinámica de Chart.js la primera vez que se necesita
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+        script.onload = () => crearGrafico(total, festivos, findes, habiles);
+        document.head.appendChild(script);
     }
     
     function actualizarVistaPrevia() {
