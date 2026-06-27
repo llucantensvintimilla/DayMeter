@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>DayMeter | Calcula días entre fechas y festivos oficiales por país y región</title>
-    <meta name="description" content="Calcula los días totales, festivos nacionales y regionales, y fines de semana entre dos fechas. Ideal para planificar vacaciones, proyectos laborales o puentes. Datos oficiales de España, México, Argentina, Colombia, Chile, Perú, EE.UU. y Reino Unido.">
-    <meta name="keywords" content="calculadora días entre fechas, contador de días laborables, festivos España 2026, festivos Cataluña, días festivos México, calcular días hábiles, planificador vacaciones, puentes laborales">
+    
+    <!-- ==================== SEO: TÍTULO PRINCIPAL ==================== -->
+    <!-- Ahora incluye la keyword principal al principio -->
+    <title>Calculadora entre fechas: días, festivos y fines de semana | DayMeter</title>
+    
+    <!-- ==================== SEO: META DESCRIPTION ==================== -->
+    <meta name="description" content="Calculadora de días entre fechas. Calcula días totales, festivos oficiales y fines de semana. Ideal para planificar vacaciones, proyectos y viajes. Datos de España, México, Argentina y más.">
+    <meta name="keywords" content="calculadora entre fechas, calculadora de fechas, días entre fechas, días laborables, días hábiles, contador de días, calcular días, festivos, fines de semana, DayMeter">
     <meta name="author" content="DayMeter">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <link rel="canonical" href="https://llucantensvintimilla.github.io/DayMeter">
@@ -14,16 +19,16 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234361ee'%3E%3Cpath d='M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z'/%3E%3C/svg%3E">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="DayMeter | Calculadora de días entre fechas con festivos oficiales">
-    <meta property="og:description" content="Calcula días totales, festivos nacionales y regionales, y fines de semana. Datos oficiales actualizados.">
+    <meta property="og:title" content="Calculadora entre fechas con festivos oficiales | DayMeter">
+    <meta property="og:description" content="Calcula días totales, festivos nacionales y regionales, y fines de semana entre dos fechas. Datos oficiales actualizados.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://llucantensvintimilla.github.io/DayMeter">
     <meta property="og:locale" content="es_ES">
     
-    <!-- Preconnect solo a CDNs usados en carga inicial -->
+    <!-- Preconnect a CDNs -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- CSS crítico inline: evita render-blocking del primer paint -->
+    <!-- CSS crítico inline (sin cambios) -->
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root{--primario:#4361ee;--primario-oscuro:#3a0ca3;--secundario:#f72585;--fondo:#f8f9fa;--texto:#212529;--gris:#6c757d;--borde:#dee2e6;--sombra:0 10px 25px -5px rgba(0,0,0,.1);--redondo:16px}
@@ -34,7 +39,7 @@
         .logo{font-size:1.6rem;font-weight:bold}.logo i{color:var(--primario);margin-right:8px}.logo-accent{color:var(--secundario)}
         .nav-menu{display:flex;gap:2rem;list-style:none}.nav-link{text-decoration:none;color:var(--texto);font-weight:500}
         .hamburger{display:none;flex-direction:column;cursor:pointer}.hamburger span{width:25px;height:3px;background:var(--texto);margin:3px 0;border-radius:3px}
-        .hero{text-align:center;padding:4rem 0 3rem}.hero h1{font-size:2.5rem;margin-bottom:1rem}.hero p{font-size:1.2rem;color:var(--gris);max-width:600px;margin:0 auto}
+        .hero{text-align:center;padding:4rem 0 3rem}.hero h1{font-size:2.5rem;margin-bottom:1rem}.hero p{font-size:1.2rem;color:var(--gris);max-width:700px;margin:0 auto}
         .gradient{background:linear-gradient(135deg,var(--primario),var(--secundario));-webkit-background-clip:text;background-clip:text;color:transparent}
         .section-calculator{padding:3rem 0}
         .card{background:white;border-radius:var(--redondo);box-shadow:var(--sombra);padding:2rem}
@@ -48,26 +53,110 @@
         .btn-principal:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(67,97,238,.3)}
         .hidden{display:none}
         .help-text{display:block;margin-top:.25rem;font-size:.75rem;color:var(--gris)}
+        /* ===== SEO: Mejora de legibilidad en resultados ===== */
+        .resultados .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:2rem 0}
+        .stat-card{background:var(--fondo);border-radius:12px;padding:1.5rem;text-align:center}
+        .stat-number{font-size:2.2rem;font-weight:bold;display:block;color:var(--primario)}
+        .stat-label{font-size:.9rem;color:var(--gris)}
+        .nota{background:#f1f3f5;padding:1rem;border-radius:8px;font-size:.9rem;color:var(--gris);margin:1rem 0}
+        .grafico-wrapper{max-width:100%;height:auto;margin:2rem 0}
+        .compartir-card{background:#f8f9fa;padding:1.5rem;border-radius:12px;margin-top:2rem}
+        .botones-compartir{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}
+        .btn-compartir{padding:.6rem 1.2rem;border:none;border-radius:40px;font-weight:600;cursor:pointer;transition:all .2s}
+        .btn-compartir.whatsapp{background:#25D366;color:white}
+        .btn-compartir.twitter{background:#1DA1F2;color:white}
+        .btn-compartir.copiar{background:#6c757d;color:white}
+        .btn-compartir:hover{transform:scale(1.05);opacity:.9}
+        /* ===== SEO: Estilos para bloques de texto ===== */
+        .seo-text-block{background:white;border-radius:var(--redondo);padding:2rem;margin:3rem 0;box-shadow:var(--sombra)}
+        .seo-text-block h2{color:var(--primario);margin-bottom:1rem}
+        .seo-text-block ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .seo-text-block ul li::before{content:"✓ ";color:var(--secundario);font-weight:bold}
         @media(max-width:768px){
             .hero h1{font-size:1.8rem}.hero p{font-size:1rem}
             .hamburger{display:flex}
             .nav-menu{position:fixed;left:-100%;top:70px;flex-direction:column;background:white;width:100%;text-align:center;padding:2rem 0;transition:.3s;box-shadow:0 10px 20px rgba(0,0,0,.1)}
             .nav-menu.activo{left:0}
             .card{padding:1.5rem}
+            .seo-text-block ul{grid-template-columns:1fr}
         }
-        /* Reserva espacio para iconos FA ANTES de que el font cargue → elimina CLS */
         i.fas,i.far,i.fab{display:inline-block;width:1.25em;text-align:center;vertical-align:-.125em;line-height:1}
-        /* Tab button: reservar border-bottom desde el inicio para evitar layout shift */
         .tab-boton{border-bottom:2px solid transparent}
+        /* ===== SEO: Estilos sección "Cómo usar" y FAQ ===== */
+        .section-title{font-size:2rem;margin-bottom:2rem;text-align:center;color:var(--texto)}
+        .pasos-verticales{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
+        .paso{text-align:center;padding:1.5rem;background:white;border-radius:var(--redondo);box-shadow:var(--sombra)}
+        .paso-numero{background:var(--primario);color:white;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;margin:0 auto 1rem}
+        .paso-contenido h3{margin-bottom:.5rem}
+        .faq-acordeon .faq-item{border-bottom:1px solid var(--borde);padding:1rem 0}
+        .faq-pregunta{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+        .faq-pregunta h3{font-size:1.1rem;font-weight:500}
+        .faq-pregunta i{transition:transform .3s;color:var(--primario)}
+        .faq-respuesta{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-top:0}
+        .faq-item.abierto .faq-respuesta{max-height:300px;padding-top:1rem}
+        .faq-item.abierto .faq-pregunta i{transform:rotate(180deg)}
+        .footer{background:#212529;color:white;padding:2rem 0;margin-top:3rem;text-align:center}
+        .footer a{color:var(--secundario);text-decoration:none}
+        .footer-links{margin-top:.5rem}
+        /* ===== SEO: Estilos para pestañas de festivos ===== */
+        .tabs-header{display:flex;gap:1rem;border-bottom:2px solid var(--borde);margin-bottom:2rem}
+        .tab-boton{padding:.75rem 1.5rem;background:none;border:none;font-weight:600;cursor:pointer;color:var(--gris)}
+        .tab-boton.activo{color:var(--primario);border-bottom:2px solid var(--primario)}
+        .tab-contenido{display:none}
+        .tab-contenido.activo{display:block}
+        .lista-festivos{max-height:400px;overflow-y:auto;padding-right:1rem}
+        .lista-festivos .festivo-item{display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid #f1f3f5}
+        .calendario-widget{max-width:700px;margin:0 auto;background:white;padding:1.5rem;border-radius:var(--redondo);box-shadow:var(--sombra)}
+        .calendario-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+        .calendario-semana{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-weight:bold;color:var(--gris);margin-bottom:.5rem}
+        .calendario-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+        .calendario-dias .dia{padding:.5rem;border-radius:8px;cursor:default;font-size:.9rem}
+        .calendario-dias .dia.festivo{background:#f72585;color:white}
+        .calendario-dias .dia.finde{background:#e9ecef;color:var(--gris)}
+        .calendario-leyenda{display:flex;justify-content:center;gap:2rem;margin-top:1rem;font-size:.9rem}
+        .punto{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:.3rem}
+        .punto-festivo{background:#f72585}
+        .punto-finde{background:#e9ecef}
+        .punto-normal{background:#4361ee}
     </style>
 
-    <!-- styles.css completo: carga asíncrona (no bloquea el render) -->
+    <!-- styles.css: carga asíncrona -->
     <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
     <!-- Font Awesome: carga asíncrona -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
-    <!-- Chart.js se carga dinámicamente al pulsar Calcular -->
+    
+    <!-- ==================== SEO: STRUCTURED DATA MEJORADO ==================== -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DayMeter - Calculadora entre fechas",
+      "description": "Calcula días totales, festivos y fines de semana entre dos fechas. Incluye festivos nacionales y regionales de múltiples países.",
+      "url": "https://llucantensvintimilla.github.io/DayMeter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "es",
+      "browserRequirements": "Requiere JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "120"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://llucantensvintimilla.github.io/DayMeter?fechaInicio={start_date}&fechaFin={end_date}",
+        "query-input": "required name=start_date; required name=end_date"
+      }
+    }
+    </script>
+    
 </head>
 <body>
 
@@ -75,7 +164,7 @@
     <div class="nav-container">
         <div class="logo"><i class="fas fa-calendar-alt"></i><span>Day<span class="logo-accent">Meter</span></span></div>
         <ul class="nav-menu">
-            <li><a href="#calculadora" class="nav-link"><i class="fas fa-calculator"></i> Calculadora</a></li>
+            <li><a href="#calculadora" class="nav-link"><i class="fas fa-calculator"></i> Calculadora entre fechas</a></li>
             <li><a href="#como-usar" class="nav-link"><i class="fas fa-compass"></i> Cómo usar</a></li>
             <li><a href="#festivos" class="nav-link"><i class="fas fa-star-of-life"></i> Festivos</a></li>
             <li><a href="#faq" class="nav-link"><i class="fas fa-question-circle"></i> FAQ</a></li>
@@ -86,8 +175,10 @@
 
 <header class="hero">
     <div class="container">
-        <h1>Calcula días entre fechas <span class="gradient">y festivos oficiales</span></h1>
-        <p><i class="fas fa-globe-americas"></i> Incluye festivos nacionales + regionales (comunidades autónomas, estados, provincias)</p>
+        <!-- ==================== SEO: H1 PRINCIPAL ==================== -->
+        <h1>Calculadora entre fechas: días, festivos <span class="gradient">y fines de semana</span></h1>
+        <!-- ==================== SEO: TEXTO DE SOPORTE ==================== -->
+        <p><i class="fas fa-globe-americas"></i> Calcula días totales, días hábiles, festivos nacionales y regionales. <strong>Datos oficiales de España, México, Argentina, Colombia, Chile, Perú, EE.UU. y Reino Unido.</strong></p>
     </div>
 </header>
 
@@ -124,11 +215,11 @@
                     </div>
                 </div>
                 <div class="checkbox-group">
-                    <!-- ✅ CHECKBOX MARCADO POR DEFECTO -->
                     <input type="checkbox" id="excluirFindes" checked>
                     <label for="excluirFindes"><i class="fas fa-calendar-times"></i> Excluir sábados y domingos (solo días laborables)</label>
                 </div>
-                <button id="calcularBtn" class="btn-principal"><i class="fas fa-chart-line"></i> Calcular periodo</button>
+                <!-- ==================== SEO: BOTÓN CON KEYWORDS ==================== -->
+                <button id="calcularBtn" class="btn-principal"><i class="fas fa-chart-line"></i> Calcular días entre fechas</button>
                 
                 <div id="resultadosPanel" class="resultados hidden">
                     <div class="stats-grid">
@@ -137,7 +228,7 @@
                         <div class="stat-card"><span class="stat-number" id="totalFindes">0</span><span class="stat-label"><i class="fas fa-home"></i> Fines de semana</span></div>
                         <div class="stat-card"><span class="stat-number" id="diasHabiles">0</span><span class="stat-label"><i class="fas fa-briefcase"></i> Días hábiles</span></div>
                     </div>
-                    <p class="nota"><i class="fas fa-info-circle"></i> Días hábiles = laborables excluyendo festivos (nacionales+regionales) y fines de semana</p>
+                    <p class="nota"><i class="fas fa-info-circle"></i> <strong>Días hábiles</strong> = días laborables (lunes a viernes) que <strong>no son festivos</strong> (nacionales + regionales) y <strong>no son fines de semana</strong>.</p>
                     <div class="grafico-wrapper"><canvas id="graficoDias" width="400" height="200"></canvas></div>
                     <div class="compartir-card">
                         <h4><i class="fas fa-share-alt"></i> Compartir resultado</h4>
@@ -156,14 +247,33 @@
         </div>
     </section>
     
+    <!-- ==================== SEO: BLOQUE DE TEXTO RICO ==================== -->
+    <section class="seo-text-block">
+        <div class="container">
+            <h2>¿Qué es una calculadora entre fechas y para qué sirve?</h2>
+            <p>Una <strong>calculadora entre fechas</strong> es una herramienta que te permite conocer la diferencia exacta en días entre dos momentos del tiempo. Con DayMeter, no solo obtienes el número total de días, sino que también desglosamos cuántos son <strong>días laborables</strong>, cuántos <strong>fines de semana</strong> y cuántos son <strong>festivos oficiales</strong> (nacionales y regionales).</p>
+            <p>Esta <strong>calculadora de fechas</strong> es ideal para:</p>
+            <ul>
+                <li><strong>Planificar vacaciones</strong> y saber cuántos días libres tienes.</li>
+                <li><strong>Calcular plazos laborales</strong> para proyectos y entregas.</li>
+                <li><strong>Organizar eventos</strong> como bodas, cumpleaños o viajes.</li>
+                <li><strong>Gestión de recursos humanos</strong> para calcular días de permiso o contratos.</li>
+                <li><strong>Planificación financiera</strong> para calcular intereses o plazos de pago.</li>
+                <li><strong>Estudios académicos</strong> para contar días de clases o vacaciones.</li>
+            </ul>
+            <p>La calculadora de DayMeter es <strong>100% gratuita</strong> y funciona en cualquier dispositivo. No necesitas registrarte y los datos de festivos se actualizan automáticamente desde fuentes oficiales.</p>
+        </div>
+    </section>
+    
     <section id="como-usar" class="section-howto">
         <div class="container">
-            <h2 class="section-title"><i class="fas fa-compass"></i> Cómo usar DayMeter</h2>
+            <!-- ==================== SEO: TÍTULO CON KEYWORDS ==================== -->
+            <h2 class="section-title"><i class="fas fa-compass"></i> Cómo usar la calculadora de días entre fechas</h2>
             <div class="pasos-verticales">
                 <div class="paso"><div class="paso-numero">1</div><div class="paso-contenido"><h3><i class="fas fa-globe-americas"></i> Selecciona tu país</h3><p>Elige el país para obtener sus días festivos oficiales actualizados.</p></div></div>
                 <div class="paso"><div class="paso-numero">2</div><div class="paso-contenido"><h3><i class="fas fa-map-marker-alt"></i> Elige tu región (opcional)</h3><p>Selecciona provincia, estado o comunidad autónoma para incluir festivos locales.</p></div></div>
                 <div class="paso"><div class="paso-numero">3</div><div class="paso-contenido"><h3><i class="fas fa-calendar-alt"></i> Elige las fechas</h3><p>Indica el inicio y fin de tu periodo (viaje, proyecto, vacaciones).</p></div></div>
-                <div class="paso"><div class="paso-numero">4</div><div class="paso-contenido"><h3><i class="fas fa-chart-line"></i> Obtén resultados y comparte</h3><p>Visualiza el gráfico, los festivos en detalle y comparte el enlace.</p></div></div>
+                <div class="paso"><div class="paso-numero">4</div><div class="paso-contenido"><h3><i class="fas fa-chart-line"></i> Calcula y comparte</h3><p>Obtén el desglose de días, el gráfico y comparte el enlace con quien quieras.</p></div></div>
             </div>
         </div>
     </section>
@@ -201,12 +311,12 @@
     
     <section id="faq" class="section-faq">
         <div class="container">
-            <h2 class="section-title"><i class="fas fa-question-circle"></i> Preguntas frecuentes sobre cálculo de días y festivos</h2>
+            <h2 class="section-title"><i class="fas fa-question-circle"></i> Preguntas frecuentes sobre la calculadora de fechas</h2>
             <div class="faq-acordeon">
                 <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-database"></i> ¿De dónde obtienen los datos de festivos?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p>Utilizamos la API oficial <strong>Nager.Date</strong>, que recopila información directamente de los gobiernos y organismos oficiales de cada país. Los datos incluyen festivos nacionales, regionales y locales.</p></div></div>
                 <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-map-marker-alt"></i> ¿Qué regiones están disponibles actualmente?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p><strong>España:</strong> todas las 17 comunidades autónomas + Ceuta y Melilla. <strong>México:</strong> los 32 estados. <strong>Argentina:</strong> las 23 provincias + CABA. <strong>Colombia, Chile, Perú, EE.UU. y Reino Unido:</strong> próximamente más regiones.</p></div></div>
                 <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-calculator"></i> ¿Cómo se calculan los días hábiles?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p>Los <strong>días hábiles</strong> son los días laborables de lunes a viernes que <strong>no son festivos</strong> (ni nacionales ni regionales) y <strong>no son fines de semana</strong>.</p></div></div>
-                <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-calendar-week"></i> ¿Para qué puedo usar esta calculadora?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p>Es ideal para planificar vacaciones, calcular plazos laborales, organizar viajes, planificar bodas o eventos, y calcular días de permiso.</p></div></div>
+                <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-calendar-week"></i> ¿Para qué puedo usar esta calculadora de fechas?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p>Es ideal para planificar vacaciones, calcular plazos laborales, organizar viajes, planificar bodas o eventos, y calcular días de permiso.</p></div></div>
                 <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-chart-line"></i> ¿Los festivos regionales se suman a los nacionales?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p><strong>Sí</strong>. Si seleccionas una región, el contador suma los festivos nacionales más los festivos exclusivos de esa región.</p></div></div>
                 <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-mobile-alt"></i> ¿Funciona en móvil y tablets?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p>Sí, DayMeter es <strong>100% responsive</strong> y se adapta a cualquier dispositivo.</p></div></div>
                 <div class="faq-item"><div class="faq-pregunta"><h3><i class="fas fa-euro-sign"></i> ¿Es realmente gratuita?</h3><i class="fas fa-chevron-down"></i></div><div class="faq-respuesta"><p><strong>Sí, 100% gratuita</strong>. No necesitas registrarte, no hay límites de uso.</p></div></div>
@@ -229,34 +339,11 @@
         </p>
     </div>
 </footer>
+
 <script src="regiones.js" defer></script>
 <script src="holidays-api.js" defer></script>
 <script src="script.js" defer></script>
 <script src="cookie-consent.js" defer></script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "DayMeter",
-  "description": "Calculadora de días entre fechas con festivos oficiales nacionales y regionales",
-  "url": "https://llucantensvintimilla.github.io/DayMeter",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "All",
-  "inLanguage": "es",
-  "offers": {
-    "@type": "Offer",
-    "price": "0.00",
-    "priceCurrency": "EUR"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "120",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
-}
-</script>
 </body>
 </html>
